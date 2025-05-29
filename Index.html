@@ -7,21 +7,22 @@
   <style>
     @font-face {
       font-family: 'OniriaVF';
-      src: url('https://juanluort.github.io/oniriaVF/JUANLU-TIPOG.woff') format('woff');
+      src: url('https://juanluort.github.io/oniriaVF/JUANLU-TIPOG.woff2') format('woff2');
       font-weight: 1 1000;
     }
 
     body {
       font-family: sans-serif;
-      background: #eee;
+      background: #f3f3f3;
       padding: 2rem;
     }
 
     .controls {
       display: flex;
       flex-wrap: wrap;
-      gap: 1.5rem;
+      gap: 2rem;
       margin-bottom: 2rem;
+      align-items: center;
     }
 
     .controls label {
@@ -39,6 +40,7 @@
       padding: 1.5rem;
       border-radius: 12px;
       border: 1px solid #ccc;
+      transition: all 0.2s ease;
     }
 
     input[type="range"], select, input[type="text"] {
@@ -74,7 +76,7 @@
     </label>
 
     <label>
-      Estilo:
+      Estilo rápido:
       <select id="preset-weight">
         <option value="0">Variable</option>
         <option value="300">Light</option>
@@ -89,35 +91,43 @@
   <div class="tester" id="tester">Tradition meets precision.</div>
 
   <script>
-    const tester = document.getElementById('tester');
-    const textInput = document.getElementById('text-input');
-    const sizeSlider = document.getElementById('size-slider');
-    const weightSlider = document.getElementById('weight-slider');
-    const presetWeight = document.getElementById('preset-weight');
-    const sizeValue = document.getElementById('size-value');
-    const weightValue = document.getElementById('weight-value');
+    window.addEventListener('DOMContentLoaded', () => {
+      const tester = document.getElementById('tester');
+      const textInput = document.getElementById('text-input');
+      const sizeSlider = document.getElementById('size-slider');
+      const weightSlider = document.getElementById('weight-slider');
+      const presetWeight = document.getElementById('preset-weight');
+      const sizeValue = document.getElementById('size-value');
+      const weightValue = document.getElementById('weight-value');
 
-    textInput.addEventListener('input', () => {
-      tester.textContent = textInput.value;
-    });
+      // Cambiar texto
+      textInput.addEventListener('input', () => {
+        tester.textContent = textInput.value;
+      });
 
-    sizeSlider.addEventListener('input', () => {
-      tester.style.fontSize = `${sizeSlider.value}px`;
-      sizeValue.textContent = sizeSlider.value;
-    });
+      // Cambiar tamaño
+      sizeSlider.addEventListener('input', () => {
+        const size = sizeSlider.value;
+        tester.style.fontSize = `${size}px`;
+        sizeValue.textContent = size;
+      });
 
-    weightSlider.addEventListener('input', () => {
-      tester.style.fontVariationSettings = `"wght" ${weightSlider.value}`;
-      weightValue.textContent = weightSlider.value;
-      presetWeight.value = 0;
-    });
+      // Cambiar peso por slider
+      weightSlider.addEventListener('input', () => {
+        const weight = weightSlider.value;
+        tester.style.fontVariationSettings = `"wght" ${weight}`;
+        weightValue.textContent = weight;
+        presetWeight.value = 0; // Desactiva el preset si se mueve el slider
+      });
 
-    presetWeight.addEventListener('change', () => {
-      const weight = presetWeight.value;
-      if (weight == 0) return;
-      weightSlider.value = weight;
-      tester.style.fontVariationSettings = `"wght" ${weight}`;
-      weightValue.textContent = weight;
+      // Cambiar peso por preset
+      presetWeight.addEventListener('change', () => {
+        const weight = presetWeight.value;
+        if (weight == 0) return; // "Variable"
+        weightSlider.value = weight;
+        tester.style.fontVariationSettings = `"wght" ${weight}`;
+        weightValue.textContent = weight;
+      });
     });
   </script>
 
