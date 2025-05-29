@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Type Tester</title>
+  <style>
+    @font-face {
+      font-family: "MiTipografia";
+      src: url("ruta-a-tu-tipografia.woff2") format("woff2");
+      font-weight: 1 1000; /* Rango de pesos variable */
+    }
+
+    body {
+      font-family: sans-serif;
+      background: #eee;
+      padding: 2rem;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .controls label {
+      font-size: 0.9rem;
+    }
+
+    .tester {
+      font-family: "MiTipografia", serif;
+      font-variation-settings: "wght" 400;
+      font-size: 48px;
+      line-height: 1.2;
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+
+    input[type="range"] {
+      width: 200px;
+    }
+
+    select, input[type="text"] {
+      font-size: 1rem;
+      padding: 0.3rem 0.6rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="controls">
+    <label>
+      Texto:
+      <input type="text" id="text-input" value="Tradition meets precision.">
+    </label>
+
+    <label>
+      Tamaño:
+      <input type="range" id="size-slider" min="16" max="200" value="48">
+      <span id="size-value">48</span>px
+    </label>
+
+    <label>
+      Peso:
+      <input type="range" id="weight-slider" min="1" max="1000" value="400">
+      <span id="weight-value">400</span>
+    </label>
+
+    <label>
+      Estilo:
+      <select id="preset-weight">
+        <option value="0">Variable</option>
+        <option value="300">Light</option>
+        <option value="400" selected>Regular</option>
+        <option value="600">Semibold</option>
+        <option value="700">Bold</option>
+        <option value="900">Black</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="tester" id="tester">Tradition meets precision.</div>
+
+  <script>
+    const tester = document.getElementById('tester');
+    const textInput = document.getElementById('text-input');
+    const sizeSlider = document.getElementById('size-slider');
+    const weightSlider = document.getElementById('weight-slider');
+    const presetWeight = document.getElementById('preset-weight');
+    const sizeValue = document.getElementById('size-value');
+    const weightValue = document.getElementById('weight-value');
+
+    textInput.addEventListener('input', () => {
+      tester.textContent = textInput.value;
+    });
+
+    sizeSlider.addEventListener('input', () => {
+      tester.style.fontSize = ⁠ ${sizeSlider.value}px ⁠;
+      sizeValue.textContent = sizeSlider.value;
+    });
+
+    weightSlider.addEventListener('input', () => {
+      tester.style.fontVariationSettings = ⁠ "wght" ${weightSlider.value} ⁠;
+      weightValue.textContent = weightSlider.value;
+      presetWeight.value = 0; // Volver a "Variable"
+    });
+
+    presetWeight.addEventListener('change', () => {
+      const weight = presetWeight.value;
+      if (weight == 0) return; // Si selecciona "Variable", no hace nada
+      weightSlider.value = weight;
+      tester.style.fontVariationSettings = ⁠ "wght" ${weight} ⁠;
+      weightValue.textContent = weight;
+    });
+  </script>
+
+</body>
+</html>
