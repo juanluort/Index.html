@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Type Tester</title>
+  <title>Type Tester – Oniria</title>
   <style>
     @font-face {
-      font-family: "MiTipografia";
-      src: url("https://juanluort.github.io/oniriaVF/JUANLU-TIPOG.woff") format("woff");
-      font-weight: 1 1000; /* Rango de pesos variable */
+      font-family: 'OniriaVF';
+      src: url('https://juanluort.github.io/oniriaVF/JUANLU-TIPOG.woff') format('woff');
+      font-weight: 1 1000;
     }
 
     body {
-      font-family: serif;
+      font-family: sans-serif;
       background: #eee;
       padding: 2rem;
     }
@@ -20,35 +20,40 @@
     .controls {
       display: flex;
       flex-wrap: wrap;
-      gap: 1rem;
+      gap: 1.5rem;
       margin-bottom: 2rem;
     }
 
     .controls label {
       font-size: 0.9rem;
+      display: flex;
+      flex-direction: column;
     }
 
     .tester {
-      font-family: "MiTipografia", serif;
+      font-family: 'OniriaVF', serif;
       font-variation-settings: "wght" 400;
       font-size: 48px;
       line-height: 1.2;
       background: white;
-      padding: 1rem;
-      border-radius: 8px;
+      padding: 1.5rem;
+      border-radius: 12px;
+      border: 1px solid #ccc;
+    }
+
+    input[type="range"], select, input[type="text"] {
+      font-size: 1rem;
+      padding: 0.4rem 0.6rem;
     }
 
     input[type="range"] {
       width: 200px;
     }
-
-    select, input[type="text"] {
-      font-size: 1rem;
-      padding: 0.3rem 0.6rem;
-    }
   </style>
 </head>
 <body>
+
+  <h1>Oniria Type Tester</h1>
 
   <div class="controls">
     <label>
@@ -59,7 +64,7 @@
     <label>
       Tamaño:
       <input type="range" id="size-slider" min="16" max="200" value="48">
-      <span id="size-value">48</span>px
+      <span id="size-value">48</span> px
     </label>
 
     <label>
@@ -97,21 +102,21 @@
     });
 
     sizeSlider.addEventListener('input', () => {
-      tester.style.fontSize = ⁠ ${sizeSlider.value}px ⁠;
+      tester.style.fontSize = `${sizeSlider.value}px`;
       sizeValue.textContent = sizeSlider.value;
     });
 
     weightSlider.addEventListener('input', () => {
-      tester.style.fontVariationSettings = ⁠ "wght" ${weightSlider.value} ⁠;
+      tester.style.fontVariationSettings = `"wght" ${weightSlider.value}`;
       weightValue.textContent = weightSlider.value;
-      presetWeight.value = 0; // Volver a "Variable"
+      presetWeight.value = 0;
     });
 
     presetWeight.addEventListener('change', () => {
       const weight = presetWeight.value;
-      if (weight == 0) return; // Si selecciona "Variable", no hace nada
+      if (weight == 0) return;
       weightSlider.value = weight;
-      tester.style.fontVariationSettings = ⁠ "wght" ${weight} ⁠;
+      tester.style.fontVariationSettings = `"wght" ${weight}`;
       weightValue.textContent = weight;
     });
   </script>
